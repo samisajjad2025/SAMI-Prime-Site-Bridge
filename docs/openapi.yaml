@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: SAMI Prime Site Bridge (Proposal Only)
+  version: 0.1.0
+  description: Authenticated, approval-only WordPress Elementor content integration; each edit needs separate administrator approval.
+servers:
+  - url: https://samiprimeresearch.in/wp-json/sami-bridge/v1
+security:
+  - wpApplicationPassword: []
+components:
+  securitySchemes:
+    wpApplicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Password, securely stored in connector configuration; never in GitHub or chat.
+  schemas:
+    Proposal:
+      type: object
+      required: [page_id, widget_id, expected_hash, content]
+      properties:
+        page_id: {type: integer, minimum: 1}
+        widget_id: {type: string}
+        expected_hash: {type: string, pattern: '^[a-f0-9]{64}$'}
+        content: {type: string, maxLength: 50000}
+paths:
+  /health:
+    get:
+      summary: Get authorized bridge status
+      responses:
+        '200': {description: Bridge status}
+  /pages:
+    get:
+      summary: Search published pages
+      parameters:
+        - name: search
+          in: query
+          schema: {type: string}
+      responses:
+        '200': {description: Published page metadata}
+  /pages/{id}/widgets:
+    get:
+      summary: Get widget IDs, hashes and short previews
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: integer}
+      responses:
+        '200': {description: Supported Elementor widgets}
+  /proposals:
+    get:
+      summary: List proposal states
+      responses:
+        '200': {description: Proposal status metadata}
+    post:
+      summary: Submit proposal without publishing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Proposal'}
+      responses:
+        '201': {description: Proposal queued for WordPress administrator approval}
+        '409': {description: The widget has changed since it was read}
