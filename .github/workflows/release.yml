@@ -1,0 +1,25 @@
+name: Build WordPress Plugin Release
+on:
+  push:
+    tags:
+      - 'v[0-9]*.[0-9]*.[0-9]*'
+permissions:
+  contents: write
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate PHP, tests, version
+        run: |
+          php -l sami-prime-site-bridge/sami-prime-site-bridge.php
+          php tests/widget-tests.php
+          VERSION="${GITHUB_REF_NAME#v}"
+          grep -Fq "Version: $VERSION" sami-prime-site-bridge/sami-prime-site-bridge.php
+          grep -Fq "const VERSION = '$VERSION';" sami-prime-site-bridge/sami-prime-site-bridge.php
+      - name: Package WordPress plugin
+        run: zip -r sami-prime-site-bridge.zip sami-prime-site-bridge -x '*.DS_Store'
+      - name: Create reviewed release (only after an explicit version tag)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" sami-prime-site-bridge.zip --verify-tag -t "Site Bridge $GITHUB_REF_NAME" -n "Test on staging before production update."
