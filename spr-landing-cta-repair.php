@@ -46,7 +46,8 @@ add_action('wp_footer', static function () {
         if (!plan) return;
         const destination = destinations[plan];
         if (!destination) return;
-        // Apply only to hero and mobile CTA buttons; pricing-table buttons are untouched.\n        // Parent-window navigation avoids
+        // Apply only to hero and mobile CTA buttons; pricing-table buttons are untouched.
+        // Parent-window navigation avoids
         // blocked window.top navigation and failed checkout inside an iframe.
         event.preventDefault();
         event.stopImmediatePropagation();
