@@ -87,7 +87,7 @@ add_action('wp_footer', static function () {
     // Read-only event listener records the explicit click before original navigation.
     doc.addEventListener('click', function(ev) {
       const target = ev.target && (ev.target.nodeType === 3 ? ev.target.parentElement : ev.target);
-      if (!target || !target.closest) return;
+      if (!target || !target.closest || destinationFor(target)) return;
       const combo = target.closest('#comboBuy, [data-checkout="combo"]');
       const starter = target.closest('#starterBuy, [data-checkout="starter"]');
       const swing = target.closest('[data-checkout="swing"]');
@@ -131,7 +131,8 @@ add_action('wp_footer', static function () {
         // Working pricing-table checkout buttons retain their existing functionality.
         event.preventDefault();
         // CTA repair intercepts this click before the funnel's own navigation.
-        trackCheckoutIntent(destination === destinations.combo ? 'combo' : destination === destinations.starter ? 'starter' : 'other');
+        if (destination === destinations.combo) trackCheckoutIntent('combo');
+        else if (destination === destinations.starter) trackCheckoutIntent('starter');
         event.stopImmediatePropagation();
         event.stopPropagation();
         // Navigate the top-level page to prevent iframe sandbox/popup restrictions.
