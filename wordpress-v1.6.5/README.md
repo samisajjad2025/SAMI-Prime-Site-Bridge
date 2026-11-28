@@ -1,0 +1,3 @@
+# Final WordPress funnel 1.6.5 — 28 November 2026
+
+Final HTML, PHP, prospectus viewer and access rule archived. Exact installable ZIP (23 files) is saved privately in ChatGPT Library; SHA-256: 8529471163530401642b8a7c1f741a1268b9c3cc7e8796b38319e1d76c7aef1a. This is a public repository, so the watermarked prospectus images and complete ZIP are not duplicated here. Older archive contains original PDF: restrict repository visibility to limit redistribution. This is an archive, not a deployment. Keep live URL and CTA Repair plugin unchanged. Live checkout, prices, consent, approval and purchase reconciliation must be verified separately.
