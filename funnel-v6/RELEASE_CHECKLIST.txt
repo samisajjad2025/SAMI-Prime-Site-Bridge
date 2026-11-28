@@ -1,0 +1,6 @@
+SAMI PRIME V6 RELEASE CANDIDATE — NOT DEPLOYED
+
+Approved design matches uploaded V6 exactly before technical modifications.
+16 checkout anchors mapped to existing repair plugin selectors. No duplicate analytics code or Purchase event added.
+Existing live source was not returned by Hostinger. Do not overwrite until original funnel.html and plugin PHP have been backed up and inspected.
+Before release: check existing PHP file asset-path rewriting, iframe height, parent navigation, lead form behavior, same-origin consent storage, actual Meta and GA4 event delivery and duplicate suppression, correct registered office address, required registration disclaimer and translations, BSE/RAASB promotional approval and plan terms. Reviews removed from this candidate pending validation. Preserve existing original assets, plugin settings and page URL. Staging noindex intentionally retained; verify parent page indexing configuration before release. Rollback: restore original funnel.html and original assets, clear page cache, verify live URL. No real payment test performed.
